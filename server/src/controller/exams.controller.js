@@ -1,4 +1,5 @@
 const Exam = require("../models/exams.model");
+const ObjectID = require("mongoose").Types.ObjectId;
 
 async function getExams(req, res) {
     try {
@@ -21,14 +22,17 @@ async function updateExam(req,res){
     }
 }
 
-async function createExam(){
+async function createExam(req, res){
     const {course,time,student} = req.body;
+    const courseId = ObjectID(course);
+    const studentID = ObjectID(student);
     try{
-        const newExam = new Exam({relatedCourse: course},{time},{studentID :student});
+        const newExam = new Exam({relatedCourse: courseId,time,studentID});
         await newExam.save();
-        res.status(200).json({exam});
+        res.status(200).json({newExam});
     }
     catch(error){
+        console.log(error)
         res.status(400).json({error});
     }
 }

@@ -12,11 +12,11 @@ const ExamSchema = new Schema({
         required : true,
     },
     studentID:{
-        type: Schema.Types.ObjectId,
+        type: Schesma.Types.ObjectId,
         ref : 'Student',
+        // type : String,
         required: true,
     },
 
 });
-
-const Task = model('Exams',ExamSchema);
+module.exports = model('Exams',ExamSchema);
