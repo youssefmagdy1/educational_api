@@ -1,19 +1,19 @@
 const express = require('express') ;
 
 const {
-    _getAllMembers,
-    _getById,
-    _createStaffEntry,
-    _updateStaffEntry,
-    _deleteStaffEntry,
+    getAllStaff,
+    getById,
+    updateStaff,
+    createStaff,
+    deleteStaff,
 } = require('../controller/staff.controller');
 
 const staffRouter = express.Router();
 
-staffRouter.get('/staff', _getAllMembers);
-staffRouter.get('/staff/:id', _getById);
-staffRouter.post("/staff", _createStaffEntry);
-staffRouter.put("/staff/:id", _updateStaffEntry);
-staffRouter.delete("/staff/:id", _deleteStaffEntry);
+staffRouter.get('/staff', getAllStaff);
+staffRouter.get('/staff/:id', getById);
+staffRouter.post("/staff", createStaff);
+staffRouter.put("/staff/:id", updateStaff);
+staffRouter.delete("/staff/:id", deleteStaff);
 
 module.exports = staffRouter;

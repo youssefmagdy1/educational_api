@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const StaffSchema = new mongoose.Schema({
+const staffSchema = new mongoose.Schema({
     ID: {
         type: String,
         required: true,
@@ -27,6 +27,7 @@ const StaffSchema = new mongoose.Schema({
     Email: {
         type: String,
         minLength: 20,
+        unique: true,
         required: true
 
     },
@@ -59,4 +60,4 @@ const StaffSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Staff', StaffSchema);
+module.exports = mongoose.model('Staff', staffSchema);
