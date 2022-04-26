@@ -12,7 +12,7 @@ const ExamSchema = new Schema({
         required : true,
     },
     studentID:{
-        type: Schesma.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref : 'Student',
         // type : String,
         required: true,
