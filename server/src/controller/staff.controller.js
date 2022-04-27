@@ -1,6 +1,5 @@
 const { json } = require('body-parser');
 const { readdirSync } = require('fs');
-const { Http2ServerRequest } = require('http2');
 const Staff = require('../models/staff.model');
 
 const getAllStaff = async (req, res) => {
