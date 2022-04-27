@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const staffSchema = new mongoose.Schema({
+const staffSchema = new Schema({
+    
     ID: {
         type: String,
         required: true,
@@ -8,19 +10,19 @@ const staffSchema = new mongoose.Schema({
     },
     FirstName: {
         type: String,
-        minLength: 6,
+        minLength: 5,
         maxLength: 15,
         required: true
     },
     MiddletName: {
         type: String,
-        minLength: 6,
+        minLength: 5,
         maxLength: 15,
         required: false
     },
     LastName: {
         type: String,
-        minLength: 6,
+        minLength: 5,
         maxLength: 15,
         required: true
     },
