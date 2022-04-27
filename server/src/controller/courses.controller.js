@@ -4,9 +4,9 @@ const Courses = require('../models/courses.model') ;
 
 
 async function getAllCourses (req ,res ){
-    return res.status(501).send({
-        error : 'not implemented yet '
-    })
+    
+    const course = await Courses.find({}) ;
+    return res.send(course) ;
 
 }
 
