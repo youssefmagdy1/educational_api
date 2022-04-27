@@ -1,18 +1,16 @@
-const express = require('express') ;
+const {Router} = require('express');
 
-const Student = require('../controller/student.controller.js');
+const Student = require('../controller/student.controller');
 
-const studentRouter = express.Router();
+const studentRouter = Router();
 
-/*
-    / in the rout doesn't mean http://localhost:3000/  
-    it's mean
-    http://localhost:3000/student/  define in the app
-*/
 studentRouter.get('/', Student.getStudents);
 studentRouter.get('/:id' , Student.getStudentById ); 
 studentRouter.post('/', Student.createStudent);  
+studentRouter.put('/:id', Student.updateStudent);
+studentRouter.delete('/:id', Student.deleteStudent);
    
 
-
-module.exports = studentRouter ; 
+module.exports = {
+    studentRouter,
+}
