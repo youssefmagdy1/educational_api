@@ -41,10 +41,11 @@ async function deleteExam(req,res){
     try{
         const id = req.params;
         await Exam.deleteOne({id});
-        res.status(200).json({exam});
+        res.status(200);
     }
     catch(error){
-        res.status(500).json({error});
+        console.log(error);
+        res.status(500);
     }
 }
 
