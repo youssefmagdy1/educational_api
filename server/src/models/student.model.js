@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const studentSchema = new Schema({
+
     name: {
         type: String,
         required: true  

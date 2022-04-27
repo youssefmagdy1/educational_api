@@ -2,6 +2,7 @@ const { json } = require('body-parser');
 const { readdirSync } = require('fs');
 const staffDB = require('../models/staff.model'); 
 const Joi = require('joi');
+const { request } = require('http');
 
 
 async function _getAllMembers (req ,res ){
@@ -11,7 +12,7 @@ async function _getAllMembers (req ,res ){
 
 }
   
-_getById
+
 async function _getById(req, res) {
     const id = req.params.id;
     const staff = await staffDB.findOne({_id :id});
@@ -39,16 +40,14 @@ const _createStaffEntry = (req, res) => {
     res.send(member);
 };
   
-const _updateStaffEntry = (req, res) => {
+const _updateStaffEntry =  async (req, res) => {
+
     const id = req.params.id;
     const staff = staffDB.findOne({_id :id});
     if (staff) {
-        
-        const updatedStaff =  staffDB.updateOne({_id :id} , req.body ,function(err, res) {
-            if (err) throw err;
-          }) ; 
+        const updatedStaff =  await staffDB.updateOne({_id :id} , {$set :req.body} ) ; 
 
-        res.status(200).send({message : "updated succefully"});
+        res.status(200).send(updatedStaff);
 
     } else {
         res.status(404).send({ error: `No staff memeber with id: ${staff.id}.`});
@@ -57,8 +56,8 @@ const _updateStaffEntry = (req, res) => {
   
 async function _deleteStaffEntry (req, res)  {
     const id = req.params.id;
-    await staffDB.deleteOne(({_id:id}));
-    res.send({ message: "Success" });
+    const staff = await staffDB.deleteOne(({_id:id}));
+    res.send(staff);
 };
   
 function validateStaff (member) {

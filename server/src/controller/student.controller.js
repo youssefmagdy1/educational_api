@@ -3,9 +3,7 @@ const Student = require('../models/student.model')
 
 const createStudent = async(req, res) =>{
     try{
-        console.log(325);
         const student = await Student.create(req.body);
-        console.log(2);
         res.status(201).send(student);
     }
     catch(e){
@@ -28,10 +26,10 @@ const getStudentById = async(req, res) =>{
         const studentId = req.params.id;
         const student = await Student.findById({_id: studentId});
         if(student === null){
-            res.status(404).send({message: "student not found"});
+           return  res.status(404).send({message: "student not found"});
         }
         else
-            res.status(200).send(student);
+            return res.status(200).send(student);
     }
     catch(e){
         res.status(404).send(e);
@@ -44,11 +42,12 @@ const updateStudent = async(req, res) => {
         const studentId = req.params.id;
         const student = await Student.findOne({_id: studentId});
         if(student){
-            const updatedStudent = Student.updateOne({_id: id}, req.body)
-            res.status(200).send({message : "updated successfully"});
+            
+            const updatedStudent = await Student.updateOne({_id: studentId}, {$set:req.body});
+            return res.status(200).send(updatedStudent);
         }
         else{
-            res.status(404).send({message : `No student member with id: ${studentId}`});
+            return res.status(404).send({message : `No student member with id: ${studentId}`});
         }
     }
     catch(e){
