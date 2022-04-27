@@ -1,32 +1,33 @@
 const mongoose = require('mongoose');
 
-const StaffSchema = new mongoose.Schema({
+const staffSchema = new mongoose.Schema({
     ID: {
         type: String,
-        required: false,
+        required: true,
         unique: true
     },
     FirstName: {
         type: String,
-        minLength: 3,
+        minLength: 6,
         maxLength: 15,
         required: true
     },
-    MiddleName: {
+    MiddletName: {
         type: String,
-        minLength: 3,
+        minLength: 6,
         maxLength: 15,
         required: false
     },
     LastName: {
         type: String,
-        minLength: 3,
+        minLength: 6,
         maxLength: 15,
         required: true
     },
     Email: {
         type: String,
-        minLength: 10,
+        minLength: 20,
+        unique: true,
         required: true
 
     },
@@ -59,4 +60,4 @@ const StaffSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Staff', StaffSchema);
+module.exports = mongoose.model('Staff', staffSchema);
