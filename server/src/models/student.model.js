@@ -1,12 +1,6 @@
-const mongoose = require('mongoose');
+const {Schema, model} = require('mongoose');
 
-const studentSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true
-    },
-
+const studentSchema = new Schema({
     name: {
         type: String,
         required: true  
@@ -33,15 +27,6 @@ const studentSchema = new mongoose.Schema({
         required: true
     },
 
-    mobile_phone: {
-        type: String,
-        unique: true
-    }
-
 });
 
-const Student = mongoose.model('Student', studentSchema);
-
-module.exports =  {
-    Student
-};
+module.exports = model('Student', studentSchema);
