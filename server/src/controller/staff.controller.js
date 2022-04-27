@@ -1,19 +1,21 @@
 const { json } = require('body-parser');
 const { readdirSync } = require('fs');
-const Staff = require('../models/staff.model'); 
+const staffDB = require('../models/staff.model'); 
+const Joi = require('joi');
 
-const _getAllMembers = (req, res) => {
-    return res.send(staffDB);
-};
+
+async function _getAllMembers (req ,res ){
+    
+    const allStaff = await staffDB.find({}) ;
+    return res.send(allStaff) ;
+
+}
   
-const _getById = (req, res) => {
-    const id = parseInt(req.params.id);
-    const staff = staffDB.find((staff) => staff.id === id);
-    if (staff) {
-      res.send(staff);
-    } else {
-      res.status(404).send({ error: "NOTFOUND" });
-    }
+_getById
+async function _getById(req, res) {
+    const id = req.params.id;
+    const staff = await staffDB.findOne({_id :id});
+    return res.status(200).send(staff) ;
 };
   
 const _createStaffEntry = (req, res) => {
@@ -22,53 +24,54 @@ const _createStaffEntry = (req, res) => {
     if(validateStaff(req.body)) return;
   
     const member = {
-      id: staff.length()+1,
-      firstName: req.body.firstName,
-      middleName: req.body.middleName,
-      lastName: req.body.lastName,
-      location: req.body.location,
-      telephone: req.body.telephone,
-      website: req.body.website
+      FirstName: req.body.FirstName,
+      MiddleName: req.body.MiddleName,
+      LastName: req.body.LastName, 
+      HomeAddress: req.body.HomeAddress,
+      Telephone: req.body.Telephone,
+      Email: req.body.Email,
+      Title: req.body.Title,
+      Department: req.body.Department,
+      Rank: req.body.Rank,
+      Salary: req.body.Salary,
     };
-    staffDB.push(member);
+    staffDB.create(member);
     res.send(member);
 };
   
 const _updateStaffEntry = (req, res) => {
-    const id = parseInt(req.params.id);
-    const staff = staffDB.find(
-        (staff) => staff.id === id
-    );
+    const id = req.params.id;
+    const staff = staffDB.findOne({_id :id});
     if (staff) {
-        if(validateStaff(req.body)) return;
+        
+        const updatedStaff =  staffDB.updateOne({_id :id} , req.body ,function(err, res) {
+            if (err) throw err;
+          }) ; 
 
-        staffDB[staff.id] = {
-        ...staffDB[staff.id],
-        ...req.body,
-        };
-        res.send(staffDB[staff.id]);
+        res.status(200).send({message : "updated succefully"});
+
     } else {
         res.status(404).send({ error: `No staff memeber with id: ${staff.id}.`});
     }
 };
   
-const _deleteStaffEntry = (req, res) => {
-    const id = parseInt(req.params.id);
-    staffDB = staffDB.filter((member) => member.id !== id);
+async function _deleteStaffEntry (req, res)  {
+    const id = req.params.id;
+    await staffDB.deleteOne(({_id:id}));
     res.send({ message: "Success" });
 };
   
 function validateStaff (member) {
     const shcema = {
-        firstName: Joi.String().min(5).required(),
-        middleName: Joi.String().min(5),
-        lastName: Joi.String().min(5).required(),
-        location: Joi.String().min(10),
-        telephone: Joi.String().length(11).required(),
-        website: Joi.String().uri()
+        firstName: Joi.string().min(5).required(),
+        middleName: Joi.string().min(5),
+        lastName: Joi.string().min(5).required(),
+        location: Joi.string().min(10),
+        telephone: Joi.string().length(11).required(),
+        website: Joi.string().uri()
     };
 
-    const { error } = Joi.validate(member, schema);
+    const { error } = staffDB.validate(member);
     if (error) {
         res.status(400).send(error.details[0].message);
         return 1;

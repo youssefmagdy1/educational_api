@@ -3,30 +3,30 @@ const mongoose = require('mongoose');
 const StaffSchema = new mongoose.Schema({
     ID: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
     FirstName: {
         type: String,
-        minLength: 6,
+        minLength: 3,
         maxLength: 15,
         required: true
     },
-    MiddletName: {
+    MiddleName: {
         type: String,
-        minLength: 6,
+        minLength: 3,
         maxLength: 15,
         required: false
     },
     LastName: {
         type: String,
-        minLength: 6,
+        minLength: 3,
         maxLength: 15,
         required: true
     },
     Email: {
         type: String,
-        minLength: 20,
+        minLength: 10,
         required: true
 
     },

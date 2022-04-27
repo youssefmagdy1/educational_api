@@ -10,10 +10,10 @@ const {
 
 const staffRouter = express.Router();
 
-staffRouter.get('/staff', _getAllMembers);
-staffRouter.get('/staff/:id', _getById);
-staffRouter.post("/staff", _createStaffEntry);
-staffRouter.put("/staff/:id", _updateStaffEntry);
-staffRouter.delete("/staff/:id", _deleteStaffEntry);
+staffRouter.get('/', _getAllMembers);
+staffRouter.get('/:id', _getById);
+staffRouter.post('/', _createStaffEntry);
+staffRouter.put("/:id", _updateStaffEntry);
+staffRouter.delete("/:id", _deleteStaffEntry);
 
 module.exports = staffRouter;
